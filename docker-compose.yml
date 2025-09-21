@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # Production service (runs main.py via run_agent.sh)
+  buffalo-ai:
+    image: buffalos-ai:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: buffalo-ai-agent
+    environment:
+       # Load from .env file
+      - CORAL_CONNECTION_URL=${CORAL_CONNECTION_URL}
+      - CORAL_AGENT_ID=${CORAL_AGENT_ID:-buffalo}
+      - CORAL_ORCHESTRATION_RUNTIME=${CORAL_ORCHESTRATION_RUNTIME}
+      - CORAL_SESSION_ID=${CORAL_SESSION_ID}
+      - BROWSER_USE_MODEL_NAME=${BROWSER_USE_MODEL_NAME}
+      - BROWSER_USE_MODEL_API_KEY=${BROWSER_USE_MODEL_API_KEY}
+      - CONVEX_URL=${CONVEX_URL}
+      - MODEL_NAME=${MODEL_NAME:-gemini-2.0-flash}
+      - MODEL_API_KEY=${MODEL_API_KEY}
+      - MODEL_PROVIDER=${MODEL_PROVIDER}
+      - MODEL_TEMPERATURE=${MODEL_TEMPERATURE:-0.1}
+      - MODEL_MAX_TOKENS=${MODEL_MAX_TOKENS:-8000}
+      - TIMEOUT_MS=${TIMEOUT_MS:-300}
+      - FIRECRAWL_API_KEY=${FIRECRAWL_API_KEY}
+      # Browser configuration for Docker
+      - DISPLAY=:99
+      - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+      - PYTHONUNBUFFERED=1
+    # Browser needs shared memory
+    shm_size: 1gb
+    # Security for browser
+    security_opt:
+      - seccomp:unconfined
+
+  # Development service (interactive buffalo_standalone.py)
+  buffalo-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: buffalo-dev-interactive
+    stdin_open: true    # -i flag
+    tty: true          # -t flag
+    command: ["/app/start.sh", "/app/.venv/bin/python", "-u", "buffalo_standalone.py"]
+    environment:
+      # Load from .env file
+      - CORAL_CONNECTION_URL=${CORAL_CONNECTION_URL}
+      - CORAL_AGENT_ID=${CORAL_AGENT_ID:-buffalo}
+      - CORAL_ORCHESTRATION_RUNTIME=${CORAL_ORCHESTRATION_RUNTIME}
+      - CORAL_SESSION_ID=${CORAL_SESSION_ID}
+      - BROWSER_USE_MODEL_NAME=${BROWSER_USE_MODEL_NAME}
+      - BROWSER_USE_MODEL_API_KEY=${BROWSER_USE_MODEL_API_KEY}
+      - CONVEX_URL=${CONVEX_URL}
+      - MODEL_NAME=${MODEL_NAME:-gemini-2.0-flash}
+      - MODEL_API_KEY=${MODEL_API_KEY}
+      - MODEL_PROVIDER=${MODEL_PROVIDER}
+      - MODEL_TEMPERATURE=${MODEL_TEMPERATURE:-0.1}
+      - MODEL_MAX_TOKENS=${MODEL_MAX_TOKENS:-8000}
+      - TIMEOUT_MS=${TIMEOUT_MS:-300}
+      - FIRECRAWL_API_KEY=${FIRECRAWL_API_KEY}
+      # Browser configuration for Docker
+      - DISPLAY=:99
+      - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+      - PYTHONUNBUFFERED=1
+    # Browser needs shared memory
+    shm_size: 1gb
+    # Security for browser
+    security_opt:
+      - seccomp:unconfined

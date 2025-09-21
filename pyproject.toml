@@ -1,0 +1,19 @@
+[project]
+name = "buffalo"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic-ai-slim[mcp]>=1.0.6",
+    "browser-use",
+    "playwright>=1.40.0",
+    "langchain>=0.3.27",
+    "langchain-community>=0.3.29",
+    "langchain-mcp-adapters>=0.1.9",
+    "aiohttp>=3.12.15",
+    "convex>=0.7.0",
+    "langchain-openai>=0.3.33",
+    "deepagents>=0.0.5",
+    "firecrawl-py>=4.3.6",
+]

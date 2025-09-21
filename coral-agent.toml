@@ -1,0 +1,49 @@
+[agent]
+name = "buffalo"
+version = "0.0.1"
+description = "An agent that does testing on your app using browser agents"
+
+[options.BROWSER_USE_MODEL_API_KEY]
+type = "string"
+description = "API key for the browser use model provider"
+
+[options.BROWSER_USE_MODEL_NAME]
+type = "string"
+description = "What browser use model to use (e.g 'gemini-2.5-flash')"
+default = "gemini-2.5-flash"
+
+[options.MODEL_API_KEY]
+type = "string"
+description = "API key for the model provider"
+
+[options.MODEL_NAME]
+type = "string"
+description = "What model to use (e.g 'gpt-4.1')"
+default = "gpt-4.1"
+
+[options.MODEL_PROVIDER]
+type = "string"
+description = "What model provider to use (e.g 'openai', etc)"
+default = "openai"
+
+[options.MODEL_MAX_TOKENS]
+type = "string"
+description = "Max tokens to use"
+default = "16000"
+
+[options.MODEL_TEMPERATURE]
+type = "string"
+description = "What model temperature to use"
+default = "0.3"
+
+[options.TIMEOUT_MS]
+type = "number"
+description = "Connection/tool timeouts in ms"
+default = 300
+
+[options.FIRECRAWL_API_KEY]
+type = "string"
+description = "API key for Firecrawl"
+
+[runtimes.executable]
+command = ["bash", "-c", "./run_agent.sh ./main.py"]

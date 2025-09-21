@@ -1,0 +1,15 @@
+# The export settings section can be placed on any agent reference type.  If you want to allow other servers to import
+# this agent for a cost, the export section must be defined for the desired runtime; e.g., docker, executable, phala
+[local-agent.export.executable]
+
+# The quantity field describes how many concurrent agents of this type in this runtime can be exported; this is to allow
+# basic control over
+quantity = 10
+
+# The pricing table is mostly a placeholder until payments are implemented
+pricing = { min_price = { type = "usd", amount = 1.00 }, max_price = { type = "usd", amount = 1000.0 } }
+
+# The agent export options table allows providing values for certain options when a remote server requests this agent.
+# This is useful when you want to export an agent that takes an API key, but don't want the end user to use their own
+# api key
+options.API_KEY = { type = "string", value = "my api key" }
